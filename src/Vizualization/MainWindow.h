@@ -4,14 +4,17 @@
 #include <QMainWindow>
 #include <QWidget>
 
+#include "WorldsMap.h"
+
 class MainWindow : public QMainWindow
 {
 Q_OBJECT
 
 public:
-    MainWindow();
+    MainWindow(WorldsMap *world);
     ~MainWindow();
 private:
+    WorldsMap *world;
 };
 
 #endif

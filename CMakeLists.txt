@@ -19,7 +19,10 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(PROJECT_SOURCES
     ./main.cpp
+
     ./src/Vizualization/MainWindow.cpp
+
+    ./src/Types/WorldsMap.cpp
 )
 
 add_executable(WorldsGeneration ${PROJECT_SOURCES})
