@@ -5,11 +5,13 @@
 
 #include "WorldsSettings.h"
 #include "Matrix.h"
+
 class WorldsMap
 {
 private:
     Matrix<uint8_t> heightsMatrix;
 
+    void showHeightMatrix();
 public:
     WorldsMap();
     ~WorldsMap();

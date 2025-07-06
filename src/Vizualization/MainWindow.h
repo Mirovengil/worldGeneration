@@ -3,17 +3,22 @@
 
 #include <QMainWindow>
 #include <QWidget>
+#include "WorldView.h"
 
 #include "WorldsMap.h"
 
+
+
 class MainWindow : public QMainWindow
 {
-Q_OBJECT
-
+    Q_OBJECT
+    
 public:
     MainWindow(WorldsMap *world);
     ~MainWindow();
+    
 private:
+    WorldView mainView;
     WorldsMap *world;
 };
 

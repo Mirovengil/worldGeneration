@@ -1,8 +1,7 @@
 #include "WorldsMap.h"
 
 WorldsMap::WorldsMap()
-{
-
+{    
 }
 
 WorldsMap::~WorldsMap()
@@ -30,4 +29,9 @@ void WorldsMap::generate(const WorldsSettings &settings)
                 heightsMatrix(i, j) = 0;
         }
     }
+}
+
+void WorldsMap::showHeightMatrix()
+{
+
 }
