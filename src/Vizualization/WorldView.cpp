@@ -1,6 +1,6 @@
 #include "WorldView.h"
 
-const uint32_t bytesPerPixel = 8;
+const uint32_t bytesPerPixel = 4;
 
 WorldView::WorldView()
 {
@@ -14,7 +14,7 @@ WorldView::WorldView()
 
 WorldView::~WorldView()
 {
-
+    delete [] imageArray;
 }
 
 QSize WorldView::sizeHint() const
@@ -55,8 +55,9 @@ void WorldView::drawMatrix(Matrix <uint8_t> *matrix)
 
 void WorldView::setPixelColor(uint32_t posY, uint32_t posX, uint8_t R, uint8_t G, uint8_t B, uint8_t A)
 {
-    imageArray[posY * imageWidth + posX  +0] = A;
-    imageArray[posY * imageWidth + posX + 1] = R;
-    imageArray[posY * imageWidth + posX + 2] = G;
-    imageArray[posY * imageWidth + posX + 3] = B;
+    uint32_t firstPixelsIndex = (posY * imageWidth + posX) * bytesPerPixel; 
+    imageArray[firstPixelsIndex + 0] = B;
+    imageArray[firstPixelsIndex + 1] = G;
+    imageArray[firstPixelsIndex + 2] = R;
+    imageArray[firstPixelsIndex + 3] = A;
 }
