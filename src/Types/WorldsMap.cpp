@@ -9,7 +9,7 @@ WorldsMap::~WorldsMap()
 
 }
 
-void WorldsMap::generate(const WorldsSettings &settings)
+void WorldsMap::init(const WorldsSettings &settings)
 {
     heightsMatrix.resize(settings.matrixHeight, settings.matrixWidth);
     
@@ -24,9 +24,9 @@ void WorldsMap::generate(const WorldsSettings &settings)
         for (int j = 0; j < heightsMatrix.width(); ++j)
         {
             if (isLight)
-                heightsMatrix(i, j) = 255;
+                heightsMatrix.at(i, j) = 255;
             else
-                heightsMatrix(i, j) = 0;
+                heightsMatrix.at(i, j) = 0;
         }
     }
 }
@@ -35,3 +35,9 @@ void WorldsMap::showHeightMatrix()
 {
 
 }
+
+Matrix<uint8_t>* WorldsMap::getHeightsMatrix()
+{
+    return &heightsMatrix;
+}
+

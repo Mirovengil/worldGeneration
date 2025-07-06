@@ -7,6 +7,8 @@
 
 #include <stdint.h>
 
+#include "Matrix.h"
+
 class WorldView : public QWidget
 {
 Q_OBJECT
@@ -14,10 +16,18 @@ Q_OBJECT
 private:
     QImage image;
     QPainter painter;
+
+    uint16_t imageWidth, imageHeight;
+    uint8_t *imageArray;
+    inline void setPixelColor(uint32_t posY, uint32_t posX, uint8_t R, uint8_t G, uint8_t B, uint8_t A);
+
 public:
     WorldView();
     ~WorldView();
     
+
+    void drawMatrix(Matrix <uint8_t> *matrix);
+
     QSize sizeHint() const override;
     void paintEvent(QPaintEvent *) override;
 };

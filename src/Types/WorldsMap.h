@@ -16,7 +16,9 @@ public:
     WorldsMap();
     ~WorldsMap();
 
-    void generate(const WorldsSettings &settings);
+    void init(const WorldsSettings &settings);
+
+    Matrix<uint8_t>* getHeightsMatrix();
 };
 
 #endif

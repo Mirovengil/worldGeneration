@@ -16,10 +16,14 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(WorldsMap *world);
     ~MainWindow();
-    
+
 private:
     WorldView mainView;
+    
+    WorldsSettings worldsSettings;
     WorldsMap *world;
+
+    void initMenu();
 };
 
 #endif

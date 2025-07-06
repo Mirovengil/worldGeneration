@@ -42,7 +42,7 @@ public:
             data[i] = new Type[horizontalSize];
     }
 
-    Type& operator()(int vertical, int horizontal)
+    Type& at(int vertical, int horizontal)
     {
         return data[vertical][horizontal];
     }
