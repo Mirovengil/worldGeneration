@@ -64,7 +64,6 @@ void WorldsMap::processHeightMatrix()
                 heightsStayingAlive.at(v, h) = 255;
             }
 
-            heightsStayingAlive.at(v, h) = 255;
             // if (neighbours > 4)
             // {
             //     heightsStayingAlive.at(v, h) = 255;
