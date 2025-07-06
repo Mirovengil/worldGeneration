@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QWidget>
+#include <QKeyEvent>
 #include "WorldView.h"
 
 #include "WorldsMap.h"
@@ -19,11 +20,13 @@ public:
 
 private:
     WorldView mainView;
-    
+
     WorldsSettings worldsSettings;
     WorldsMap *world;
 
     void initMenu();
+    
+    void keyPressEvent(QKeyEvent *event);
 };
 
 #endif

@@ -10,13 +10,14 @@ class WorldsMap
 {
 private:
     Matrix<uint8_t> heightsMatrix;
-
-    void showHeightMatrix();
+    Matrix<uint8_t> heightsStayingAlive;
 public:
     WorldsMap();
     ~WorldsMap();
 
-    void init(const WorldsSettings &settings);
+    void initHeightMatrix(const WorldsSettings &settings);
+    void processHeightMatrix();
+    uint8_t cntNeighbours(uint32_t v, uint32_t h);
 
     Matrix<uint8_t>* getHeightsMatrix();
 };
