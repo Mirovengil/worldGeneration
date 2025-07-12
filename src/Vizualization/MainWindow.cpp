@@ -41,6 +41,9 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         case Qt::Key_M:
             world->doMedianFiltrationForMatrixOfHeights(3); // TODO : параметризуй эту шнягу...            
             break;
+        case Qt::Key_S:
+            world->renewSandMatrix();
+            break;
         case Qt::Key_E:
             close();
             break;

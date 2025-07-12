@@ -26,6 +26,7 @@ void WorldsMap::initWorld(const WorldsSettings &settings)
 
     heightsMatrix.resize(settings.matrixHeight, settings.matrixWidth);
     temporalMatrix.resize(settings.matrixHeight, settings.matrixWidth);
+    sandMatrix.resize(settings.matrixHeight, settings.matrixWidth);
 
     for (int i = 0; i < heightsMatrix.height(); ++i)
     {
@@ -38,11 +39,18 @@ void WorldsMap::initWorld(const WorldsSettings &settings)
                 heightsMatrix.at(i, j) = 0;
         }
     }
+
+    sandMatrix.fillDataWithZeros();
 }
 
 Matrix<uint8_t>* WorldsMap::getHeightsMatrix()
 {
     return &heightsMatrix;
+}
+
+Matrix<uint8_t>* WorldsMap::getSandMatrix()
+{
+    return &sandMatrix;
 }
 
 void WorldsMap::processHeightMatrix()
@@ -84,6 +92,8 @@ void WorldsMap::processHeightMatrix()
 
     temporalMatrix.copyTo(&heightsMatrix);
 
+
+    sandMatrix.fillDataWithZeros();
 }
 
 uint8_t WorldsMap::cntNeighbours(uint32_t v, uint32_t h)
@@ -103,6 +113,37 @@ uint8_t WorldsMap::cntNeighbours(uint32_t v, uint32_t h)
     return cnt;
 }
 
+uint8_t WorldsMap::cntWaterNeighbours(uint32_t v, uint32_t h, uint8_t radius)
+{
+    uint8_t numberOfWaterNeighbours = 0;
+
+    for (int i = -radius; i <= radius; ++i)
+    for (int j = -radius; j <= radius; ++j)
+    {
+        if (i == 0 && j == 0) continue;
+        if (v + i < 0 || h + j < 0) continue;
+        if (v + i >= heightsMatrix.height() || h + j >= heightsMatrix.width()) continue;
+        
+        numberOfWaterNeighbours += (heightsMatrix.at(v + i, h + j) == 0);
+    }
+
+    return numberOfWaterNeighbours;
+}
+
+void WorldsMap::renewSandMatrix()
+{
+    for (int v = 0; v < heightsMatrix.height(); ++v)
+        for (int h = 0; h < heightsMatrix.width(); ++h)
+        {
+            if (heightsMatrix.at(v, h) != 255) continue; // не превращаем воду в песок...
+
+            if (cntWaterNeighbours(v, h, 4) > 2)
+                sandMatrix.at(v, h) = 255;
+            else
+                sandMatrix.at(v, h) = 0;
+        }
+}
+
 void WorldsMap::doMedianFiltrationForMatrixOfHeights(uint8_t radius)
 {
     temporalMatrix.fillDataWithZeros();
@@ -113,6 +154,8 @@ void WorldsMap::doMedianFiltrationForMatrixOfHeights(uint8_t radius)
 
     // save results
     temporalMatrix.copyTo(&heightsMatrix);
+
+    sandMatrix.fillDataWithZeros();
 }   
 
 uint8_t WorldsMap::resultOfMedianFilterInPoint(uint32_t v, uint32_t h, uint8_t radius)

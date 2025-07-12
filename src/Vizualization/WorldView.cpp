@@ -47,7 +47,12 @@ void WorldView::drawWorld(WorldsMap *world)
             }
             else
             {
-                R = 0; G = 255; B = 0;
+                R = 41; G = 94; B = 22;
+            }
+
+            if (world->getSandMatrix()->at(i, j) != 0)
+            {
+                R = 255; G = 249; B = 82;
             }
             setPixelColor(i, j, R, G, B, A);
         }
