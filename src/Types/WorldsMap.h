@@ -10,7 +10,7 @@ class WorldsMap
 {
 private:
     Matrix<uint8_t> heightsMatrix;
-    Matrix<uint8_t> heightsStayingAlive;
+    Matrix<uint8_t> temporalMatrix;
 public:
     WorldsMap();
     ~WorldsMap();
@@ -22,7 +22,8 @@ public:
     void processHeightMatrix();
     uint8_t cntNeighbours(uint32_t v, uint32_t h);
 
-
+    void doMedianFiltrationForMatrixOfHeights(uint8_t radius);
+    uint8_t resultOfMedianFilterInPoint(uint32_t v, uint32_t h, uint8_t radius);
 
     Matrix<uint8_t>* getHeightsMatrix();
 };

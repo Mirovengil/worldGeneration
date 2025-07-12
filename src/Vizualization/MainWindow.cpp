@@ -37,9 +37,14 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         case Qt::Key_I:
             world->initWorld(worldsSettings);
             break;
+        case Qt::Key_M:
+            world->doMedianFiltrationForMatrixOfHeights(3); // TODO : параметризуй эту шнягу...            
+            break;
         case Qt::Key_E:
             close();
             break;
+        default:
+            return;
     }
     mainView.drawWorld(world);
 

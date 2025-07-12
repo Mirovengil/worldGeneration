@@ -25,7 +25,7 @@ void WorldsMap::initWorld(const WorldsSettings &settings)
     uint8_t rnd;
 
     heightsMatrix.resize(settings.matrixHeight, settings.matrixWidth);
-    heightsStayingAlive.resize(settings.matrixHeight, settings.matrixWidth);
+    temporalMatrix.resize(settings.matrixHeight, settings.matrixWidth);
 
     for (int i = 0; i < heightsMatrix.height(); ++i)
     {
@@ -49,7 +49,7 @@ void WorldsMap::processHeightMatrix()
 {
     // TODO : добавь проверку, что матрица инициализирована
 
-    heightsStayingAlive.fillDataWithZeros();
+    temporalMatrix.fillDataWithZeros();
 
     uint8_t neighbours;
     uint8_t self;
@@ -62,27 +62,27 @@ void WorldsMap::processHeightMatrix()
             if ((neighbours == 3 || neighbours == 4 || neighbours == 6 || neighbours == 7 || neighbours == 8)
                 && (self))
             {
-                heightsStayingAlive.at(v, h) = 255;
+                temporalMatrix.at(v, h) = 255;
             }
 
             if ((neighbours == 3 || neighbours == 6 || neighbours == 7 || neighbours == 8)
                 && (!self))
             {
-                heightsStayingAlive.at(v, h) = 255;
+                temporalMatrix.at(v, h) = 255;
             }
 
             // if (neighbours > 4)
             // {
-            //     heightsStayingAlive.at(v, h) = 255;
+            //     temporalMatrix.at(v, h) = 255;
             // }
             // else
             // if (neighbours < 4)
-            //     heightsStayingAlive.at(v, h) = 0;
+            //     temporalMatrix.at(v, h) = 0;
             // else
-            //     heightsStayingAlive.at(v, h) = heightsMatrix.at(v, h);
+            //     temporalMatrix.at(v, h) = heightsMatrix.at(v, h);
         }
 
-    heightsStayingAlive.copyTo(&heightsMatrix);
+    temporalMatrix.copyTo(&heightsMatrix);
 
 }
 
@@ -101,4 +101,37 @@ uint8_t WorldsMap::cntNeighbours(uint32_t v, uint32_t h)
     }
 
     return cnt;
+}
+
+void WorldsMap::doMedianFiltrationForMatrixOfHeights(uint8_t radius)
+{
+    temporalMatrix.fillDataWithZeros();
+    
+    for (int v = 0; v < heightsMatrix.height(); ++v)
+        for (int h = 0; h < heightsMatrix.width(); ++h)
+            temporalMatrix.at(v, h) = resultOfMedianFilterInPoint(v, h, radius);
+
+    // save results
+    temporalMatrix.copyTo(&heightsMatrix);
+}   
+
+uint8_t WorldsMap::resultOfMedianFilterInPoint(uint32_t v, uint32_t h, uint8_t radius)
+{
+    uint16_t numberOfWaterPoint = 0;
+    uint16_t numberOfSandPoint = 0;
+
+    for (int i = -radius; i <= radius; ++i)
+    for (int j = -radius; j <= radius; ++j)
+    {
+        if (i == 0 && j == 0) continue;
+        if (v + i < 0 || h + j < 0) continue;
+        if (v + i >= heightsMatrix.height() || h + j >= heightsMatrix.width()) continue;
+
+        numberOfWaterPoint += (heightsMatrix.at(v + i, h + j) == 0);
+        numberOfSandPoint += (heightsMatrix.at(v + i, h + j) == 255);
+    }
+
+    if (numberOfSandPoint > numberOfWaterPoint)
+        return 255;
+    return 0;
 }
