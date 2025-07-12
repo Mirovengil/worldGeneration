@@ -38,7 +38,7 @@ void MainWindow::initMenu()
 
     connect(initNewWorldAction, &QAction::triggered, this, 
         [=](){
-            world->initHeightMatrix(worldsSettings);
+            world->initWorld(worldsSettings);
             mainView.drawWorld(world);
         });
     connect(closeApplicationAction, &QAction::triggered, this, &MainWindow::close);

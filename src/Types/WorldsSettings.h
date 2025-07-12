@@ -13,6 +13,10 @@ struct WorldsSettings
     // сид для ГСЧ
     uint32_t randomSeed;
 
+    // 0 ~ генерируются только клетки воды
+    // 255 ~ генерируются только клетки суши
+    uint8_t percentOfSand;
+
 };
 
 #endif 

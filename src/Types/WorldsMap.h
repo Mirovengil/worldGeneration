@@ -18,7 +18,7 @@ public:
     uint32_t height();
     uint32_t width();
 
-    void initHeightMatrix(const WorldsSettings &settings);
+    void initWorld(const WorldsSettings &settings);
     void processHeightMatrix();
     uint8_t cntNeighbours(uint32_t v, uint32_t h);
 

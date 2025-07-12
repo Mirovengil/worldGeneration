@@ -19,11 +19,9 @@ uint32_t WorldsMap::width()
     return heightsMatrix.width();
 }
 
-void WorldsMap::initHeightMatrix(const WorldsSettings &settings)
+void WorldsMap::initWorld(const WorldsSettings &settings)
 {
     srand(settings.randomSeed);
-    
-    uint8_t threshold = 128;
     uint8_t rnd;
 
     heightsMatrix.resize(settings.matrixHeight, settings.matrixWidth);
@@ -33,8 +31,8 @@ void WorldsMap::initHeightMatrix(const WorldsSettings &settings)
     {
         for (int j = 0; j < heightsMatrix.width(); ++j)
         {
-            rnd = rand() % 256;
-            if (rnd > threshold)
+            rnd = rand() % 255;
+            if (rnd < settings.percentOfSand)
                 heightsMatrix.at(i, j) = 255;
             else
                 heightsMatrix.at(i, j) = 0;
