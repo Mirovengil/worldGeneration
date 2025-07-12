@@ -10,6 +10,15 @@ WorldsMap::~WorldsMap()
 
 }
 
+uint32_t WorldsMap::height()
+{
+    return heightsMatrix.height();
+}
+uint32_t WorldsMap::width()
+{
+    return heightsMatrix.width();
+}
+
 void WorldsMap::initHeightMatrix(const WorldsSettings &settings)
 {
     srand(settings.randomSeed);

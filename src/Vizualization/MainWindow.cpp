@@ -39,7 +39,7 @@ void MainWindow::initMenu()
     connect(initNewWorldAction, &QAction::triggered, this, 
         [=](){
             world->initHeightMatrix(worldsSettings);
-            mainView.drawMatrix(world->getHeightsMatrix());
+            mainView.drawWorld(world);
         });
     connect(closeApplicationAction, &QAction::triggered, this, &MainWindow::close);
 }
@@ -49,6 +49,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     if (event->key() == Qt::Key_Space)
     {
         world->processHeightMatrix();
-        mainView.drawMatrix(world->getHeightsMatrix());
+        mainView.drawWorld(world);
     }
+
 }

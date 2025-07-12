@@ -7,7 +7,7 @@
 
 #include <stdint.h>
 
-#include "Matrix.h"
+#include "WorldsMap.h"
 
 class WorldView : public QWidget
 {
@@ -26,7 +26,7 @@ public:
     ~WorldView();
     
 
-    void drawMatrix(Matrix <uint8_t> *matrix);
+    void drawWorld(WorldsMap *world);
 
     QSize sizeHint() const override;
     void paintEvent(QPaintEvent *) override;

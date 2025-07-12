@@ -15,9 +15,14 @@ public:
     WorldsMap();
     ~WorldsMap();
 
+    uint32_t height();
+    uint32_t width();
+
     void initHeightMatrix(const WorldsSettings &settings);
     void processHeightMatrix();
     uint8_t cntNeighbours(uint32_t v, uint32_t h);
+
+
 
     Matrix<uint8_t>* getHeightsMatrix();
 };

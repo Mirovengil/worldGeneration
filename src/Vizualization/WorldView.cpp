@@ -29,15 +29,19 @@ void WorldView::paintEvent(QPaintEvent *)
     painter.end();
 }
 
-void WorldView::drawMatrix(Matrix <uint8_t> *matrix)
+void WorldView::drawWorld(WorldsMap *world)
 {
+    uint32_t height, width;
+    height = world->height();
+    width = world->width();
+
     uint8_t R, G, B, A;
     A = 255;
-    for (int i = 0; i < matrix->height(); ++i)
+    for (int i = 0; i < height; ++i)
     {
-        for (int j = 0; j < matrix->width(); ++j)
+        for (int j = 0; j < width; ++j)
         {
-            if (matrix->at(i, j) == 0)
+            if (world->getHeightsMatrix()->at(i, j) == 0)
             {
                 R = 0; G = 0; B = 255;
             }
