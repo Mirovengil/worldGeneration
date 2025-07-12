@@ -10,7 +10,8 @@ MainWindow::MainWindow(WorldsMap *world)
 {
     this->world = world;
 
-    mainView.resize(640, 480);  // TODO : убрать хардкод...
+    setFixedSize(500, 500);
+    mainView.resize(500, 500);  // TODO : убрать хардкод...
     setCentralWidget(&mainView);
 
     update();
@@ -19,7 +20,7 @@ MainWindow::MainWindow(WorldsMap *world)
     worldsSettings.matrixHeight = 500;
     worldsSettings.matrixWidth = 500;
     worldsSettings.randomSeed = time(0);
-    worldsSettings.percentOfSand = 128;
+    worldsSettings.percentOfSand = 150;
 }
 
 MainWindow::~MainWindow()
