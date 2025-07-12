@@ -23,8 +23,6 @@ private:
 
     WorldsSettings worldsSettings;
     WorldsMap *world;
-
-    void initMenu();
     
     void keyPressEvent(QKeyEvent *event);
 };

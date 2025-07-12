@@ -13,14 +13,13 @@ MainWindow::MainWindow(WorldsMap *world)
     mainView.resize(640, 480);  // TODO : убрать хардкод...
     setCentralWidget(&mainView);
 
-    initMenu();
-
     update();
 
     // начальные настройки мира
     worldsSettings.matrixHeight = 500;
     worldsSettings.matrixWidth = 500;
     worldsSettings.randomSeed = time(0);
+    worldsSettings.percentOfSand = 128;
 }
 
 MainWindow::~MainWindow()
@@ -28,28 +27,20 @@ MainWindow::~MainWindow()
     
 }
 
-void MainWindow::initMenu()
-{
-    QAction *initNewWorldAction = new QAction(tr("INIT"));
-    QAction *closeApplicationAction = new QAction(tr("EXIT"));
-
-    menuBar()->addAction(initNewWorldAction);
-    menuBar()->addAction(closeApplicationAction);
-
-    connect(initNewWorldAction, &QAction::triggered, this, 
-        [=](){
-            world->initWorld(worldsSettings);
-            mainView.drawWorld(world);
-        });
-    connect(closeApplicationAction, &QAction::triggered, this, &MainWindow::close);
-}
-
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
-    if (event->key() == Qt::Key_Space)
+    switch (event->key())
     {
-        world->processHeightMatrix();
-        mainView.drawWorld(world);
+        case Qt::Key_Space:
+            world->processHeightMatrix();
+            break;
+        case Qt::Key_I:
+            world->initWorld(worldsSettings);
+            break;
+        case Qt::Key_E:
+            close();
+            break;
     }
+    mainView.drawWorld(world);
 
 }
